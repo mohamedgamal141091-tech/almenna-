@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>المنة في التفسير بالسنة وثقات الأئمة</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<a href="#main" class="skip">تخطَّ إلى المحتوى</a>
+<header>
+  <h1 id="appTitle">المنة في التفسير بالسنة وثقات الأئمة</h1>
+  <nav aria-label="الأقسام الرئيسية">
+    <button data-go="home">الرئيسية</button>
+    <button data-go="surahs">السور</button>
+    <button data-go="search">البحث</button>
+    <button data-go="hadith">كتب السنة</button>
+    <button data-go="hifz">الحفظ</button>
+    <button data-go="wird">الورد والختمة</button>
+    <button data-go="saved">العلامات والملاحظات</button>
+    <button data-go="books">المصادر والمراجع</button>
+    <button data-go="settings">الإعدادات</button>
+  </nav>
+</header>
+
+<main id="main">
+
+<section id="home" class="screen" aria-labelledby="hHome">
+  <h2 id="hHome" tabindex="-1">الرئيسية</h2>
+  <form id="jumpForm" class="row">
+    <label for="jumpInput">انتقال سريع (مثل: البقرة 255، أو 2:255، أو صفحة 300، أو جزء 30)</label>
+    <input id="jumpInput" type="text" inputmode="text" autocomplete="off">
+    <button type="submit">انتقال</button>
+  </form>
+  <div class="row">
+    <button id="btnContinue">متابعة القراءة من آخر موضع</button>
+  </div>
+  <h3>آية اليوم</h3>
+  <div id="dailyAyah" class="card" aria-live="off">جارٍ التحميل…</div>
+  <h3>مراجعة اليوم</h3>
+  <div id="homeReview" class="card"></div>
+</section>
+
+<section id="surahs" class="screen" aria-labelledby="hSurahs" hidden>
+  <h2 id="hSurahs" tabindex="-1">فهرس السور</h2>
+  <div class="row">
+    <label for="surahFilter">تصفية</label>
+    <select id="surahFilter">
+      <option value="all">كل السور</option>
+      <option value="Meccan">السور المكية</option>
+      <option value="Medinan">السور المدنية</option>
+    </select>
+  </div>
+  <ol id="surahList" class="list"></ol>
+</section>
+
+<section id="reader" class="screen" aria-labelledby="hReader" hidden>
+  <h2 id="hReader" tabindex="-1">الآية</h2>
+  <p id="ayahMeta" class="meta"></p>
+  <p id="ayahText" class="ayah" lang="ar"></p>
+  <p id="sajdaNote" class="note" hidden></p>
+  <div class="row" role="group" aria-label="التنقل والتلاوة">
+    <button id="btnPrev">الآية السابقة</button>
+    <button id="btnPlay">استماع</button>
+    <button id="btnNext">الآية التالية</button>
+  </div>
+  <div class="row" role="group" aria-label="أدوات الآية">
+    <button id="btnBookmark">إضافة علامة</button>
+    <button id="btnNote">ملاحظة تدبر</button>
+    <button id="btnCopy">نسخ موثق</button>
+    <button id="btnShare">مشاركة</button>
+    <button id="btnSunnahSearch">الأحاديث التي ذكرت الآية</button>
+  </div>
+  <div class="row">
+    <label for="tafsirType">نوع التفسير</label>
+    <select id="tafsirType"></select>
+    <button id="btnTafsir">عرض</button>
+  </div>
+  <div id="tafsirOut" class="out" aria-live="polite"></div>
+</section>
+
+<section id="search" class="screen" aria-labelledby="hSearch" hidden>
+  <h2 id="hSearch" tabindex="-1">البحث في القرآن</h2>
+  <form id="searchForm">
+    <div class="row">
+      <label for="searchInput">كلمة أو جزء من آية (بلا تشكيل)</label>
+      <input id="searchInput" type="search" autocomplete="off">
+    </div>
+    <div class="row">
+      <label for="searchScope">النطاق</label>
+      <select id="searchScope">
+        <option value="all">القرآن كله</option>
+        <option value="Meccan">السور المكية</option>
+        <option value="Medinan">السور المدنية</option>
+      </select>
+      <label for="searchMode">طريقة المطابقة</label>
+      <select id="searchMode">
+        <option value="contains">يحتوي على النص</option>
+        <option value="word">كلمة كاملة</option>
+        <option value="all">كل الكلمات في الآية</option>
+      </select>
+      <button type="submit">بحث</button>
+    </div>
+  </form>
+  <p id="searchSummary" aria-live="polite"></p>
+  <ol id="searchResults" class="list"></ol>
+</section>
+
+<section id="hadith" class="screen" aria-labelledby="hHadith" hidden>
+  <h2 id="hHadith" tabindex="-1">البحث في كتب السنة</h2>
+  <p class="note">الكتب تُحمَّل من الإنترنت مرة واحدة ثم تعمل بلا إنترنت. حجم الكتاب الواحد بين 2 و7 ميجا.</p>
+  <form id="hadithForm">
+    <div class="row">
+      <label for="hadithBook">الكتاب</label>
+      <select id="hadithBook"></select>
+    </div>
+    <div class="row">
+      <label for="hadithQuery">نص البحث (بلا تشكيل)</label>
+      <input id="hadithQuery" type="search" autocomplete="off">
+      <button type="submit">بحث</button>
+    </div>
+    <div class="row">
+      <label for="hadithNum">أو رقم الحديث</label>
+      <input id="hadithNum" type="number" min="1" inputmode="numeric">
+      <button type="button" id="btnHadithNum">عرض الحديث</button>
+    </div>
+  </form>
+  <p id="hadithSummary" aria-live="polite"></p>
+  <ol id="hadithResults" class="list"></ol>
+</section>
+
+<section id="hifz" class="screen" aria-labelledby="hHifz" hidden>
+  <h2 id="hHifz" tabindex="-1">الحفظ والمراجعة</h2>
+  <div class="row">
+    <label for="hifzSurah">السورة</label>
+    <select id="hifzSurah"></select>
+    <label for="hifzFrom">من آية</label>
+    <input id="hifzFrom" type="number" min="1" value="1" inputmode="numeric">
+    <label for="hifzTo">إلى آية</label>
+    <input id="hifzTo" type="number" min="1" value="5" inputmode="numeric">
+  </div>
+  <div class="row">
+    <label for="hifzRepeat">تكرار كل آية</label>
+    <input id="hifzRepeat" type="number" min="1" max="50" value="3" inputmode="numeric">
+    <label><input id="hifzCumulative" type="checkbox" checked> تكرار تراكمي للمقطع بعد كل آية</label>
+  </div>
+  <div class="row">
+    <button id="btnHifzStart">ابدأ الحفظ بالاستماع</button>
+    <button id="btnHifzTest">اختبار التسميع</button>
+    <button id="btnHifzNextTest">اختبار «الآية التالية»</button>
+    <button id="btnHifzStop">إيقاف</button>
+  </div>
+  <div id="hifzOut" class="out" aria-live="polite"></div>
+  <div id="testButtons" class="row" hidden>
+    <button id="btnReveal">أسمعني الصواب</button>
+    <button id="btnRight">أحسنت</button>
+    <button id="btnWrong">أخطأت</button>
+  </div>
+  <div class="row"><button id="btnAddReview">أضف المقطع إلى جدول المراجعة</button></div>
+  <h3>جدول المراجعة المتباعدة</h3>
+  <ol id="reviewList" class="list"></ol>
+  <h3>سجل الحفظ</h3>
+  <p id="hifzStats"></p>
+</section>
+
+<section id="wird" class="screen" aria-labelledby="hWird" hidden>
+  <h2 id="hWird" tabindex="-1">الورد اليومي والختمة</h2>
+  <div class="row">
+    <label for="khatmaDays">أختم القرآن في (يوم)</label>
+    <input id="khatmaDays" type="number" min="1" max="365" value="30" inputmode="numeric">
+    <button id="btnKhatma">بدء خطة الختمة</button>
+  </div>
+  <div id="wirdOut" class="out" aria-live="polite"></div>
+  <div class="row">
+    <button id="btnReadWird">اقرأ ورد اليوم</button>
+    <button id="btnWirdDone">أتممت ورد اليوم</button>
+  </div>
+  <h3>خطط التدبر</h3>
+  <ol id="tadabburPlans" class="list"></ol>
+  <h3>مواقيت الصلاة</h3>
+  <div class="row">
+    <label for="prayerCity">المدينة</label>
+    <input id="prayerCity" type="text" value="Asyut">
+    <label for="prayerCountry">الدولة</label>
+    <input id="prayerCountry" type="text" value="Egypt">
+    <button id="btnPrayer">عرض المواقيت</button>
+  </div>
+  <div id="prayerOut" class="out" aria-live="polite"></div>
+</section>
+
+<section id="saved" class="screen" aria-labelledby="hSaved" hidden>
+  <h2 id="hSaved" tabindex="-1">العلامات وملاحظات التدبر</h2>
+  <h3>العلامات</h3>
+  <ol id="bookmarkList" class="list"></ol>
+  <h3>دفتر التدبر</h3>
+  <ol id="noteList" class="list"></ol>
+  <div class="row">
+    <button id="btnExportNotes">مشاركة الملاحظات كنص</button>
+    <button id="btnBackup">نسخ احتياطي</button>
+    <button id="btnRestore">استعادة نسخة</button>
+  </div>
+  <div id="savedOut" class="out" aria-live="polite"></div>
+</section>
+
+<section id="books" class="screen" aria-labelledby="hBooks" hidden>
+  <h2 id="hBooks" tabindex="-1">المصادر والمراجع</h2>
+  <div id="booksOut"></div>
+</section>
+
+<section id="settings" class="screen" aria-labelledby="hSettings" hidden>
+  <h2 id="hSettings" tabindex="-1">الإعدادات</h2>
+  <div class="row">
+    <label for="setReciter">القارئ</label>
+    <select id="setReciter">
+      <option value="ar.husary">محمود خليل الحصري — مرتل</option>
+      <option value="ar.husarymujawwad">محمود خليل الحصري — مجود</option>
+      <option value="ar.minshawi">محمد صديق المنشاوي — مرتل</option>
+      <option value="ar.minshawimujawwad">محمد صديق المنشاوي — مجود</option>
+      <option value="ar.abdulbasitmurattal">عبد الباسط عبد الصمد — مرتل</option>
+      <option value="ar.alafasy">مشاري العفاسي</option>
+      <option value="ar.mahermuaiqly">ماهر المعيقلي</option>
+    </select>
+  </div>
+  <div class="row">
+    <label for="setRasm">رسم الآيات</label>
+    <select id="setRasm">
+      <option value="quran-simple">إملائي مشكول (الأوفق مع الناطق، كالمكتبة الشاملة)</option>
+      <option value="quran-uthmani">عثماني</option>
+    </select>
+  </div>
+  <div class="row">
+    <label for="setSpeed">سرعة التلاوة</label>
+    <select id="setSpeed">
+      <option value="0.75">بطيئة</option>
+      <option value="1" selected>عادية</option>
+      <option value="1.25">أسرع قليلًا</option>
+      <option value="1.5">سريعة</option>
+    </select>
+    <label for="setRepeat">تكرار الآية عند الاستماع</label>
+    <input id="setRepeat" type="number" min="1" max="50" value="1" inputmode="numeric">
+  </div>
+  <div class="row">
+    <label><input id="setAutoNext" type="checkbox"> الانتقال التلقائي للآية التالية</label>
+    <label><input id="setAutoTafsir" type="checkbox"> عرض التفسير تلقائيًا بعد التلاوة</label>
+  </div>
+  <div class="row">
+    <label for="setSleep">مؤقت إيقاف التلاوة (دقيقة، 0 = بدون)</label>
+    <input id="setSleep" type="number" min="0" max="180" value="0" inputmode="numeric">
+  </div>
+  <div class="row">
+    <label for="setLevel">مستوى العرض</label>
+    <select id="setLevel">
+      <option value="basic">مبتدئ: المعنى والأحاديث فقط</option>
+      <option value="research">باحث: كل النصوص والتنبيهات</option>
+    </select>
+  </div>
+  <div class="row">
+    <label for="setFont">حجم الخط</label>
+    <select id="setFont">
+      <option value="1">عادي</option>
+      <option value="1.3">كبير</option>
+      <option value="1.7">كبير جدًا</option>
+      <option value="2.2">ضخم</option>
+    </select>
+    <label for="setTheme">الألوان</label>
+    <select id="setTheme">
+      <option value="light">فاتح</option>
+      <option value="dark">ليلي</option>
+      <option value="contrast">تباين عالٍ</option>
+    </select>
+  </div>
+  <div class="row">
+    <label><input id="setTones" type="checkbox" checked> نغمات تمييز الأقسام (آية، حديث، أثر)</label>
+    <label><input id="setDaily" type="checkbox" checked> آية اليوم في الرئيسية</label>
+  </div>
+  <div class="row">
+    <label for="setProfile">المستخدم</label>
+    <select id="setProfile"></select>
+    <button id="btnNewProfile">مستخدم جديد</button>
+  </div>
+  <div class="row">
+    <button id="btnSaveSettings">حفظ الإعدادات</button>
+    <button id="btnTour">جولة تعريفية</button>
+    <button id="btnClearCache">حذف الكتب والتلاوات المحفوظة</button>
+  </div>
+  <div id="settingsOut" class="out" aria-live="polite"></div>
+</section>
+
+</main>
+
+<div id="dialog" class="dialog" role="dialog" aria-modal="true" aria-labelledby="dlgTitle" hidden>
+  <h2 id="dlgTitle" tabindex="-1"></h2>
+  <label for="dlgText" id="dlgLabel"></label>
+  <textarea id="dlgText" rows="6"></textarea>
+  <div class="row">
+    <button id="dlgOk">حفظ</button>
+    <button id="dlgCancel">إلغاء</button>
+  </div>
+</div>
+
+<div id="announcer" class="sr" aria-live="assertive" role="status"></div>
+<audio id="player" preload="none"></audio>
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

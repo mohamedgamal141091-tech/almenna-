@@ -1,0 +1,8 @@
+{
+  "appId": "com.mohamedgamal.almenna",
+  "appName": "المنة",
+  "webDir": "www",
+  "android": {
+    "allowMixedContent": false
+  }
+}
