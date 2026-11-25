@@ -26,10 +26,29 @@ jobs:
       - name: تثبيت المكتبات
         run: npm install
 
+      - name: رقم الإصدار
+        run: echo "{\"build\": ${{ github.run_number }}, \"version\": \"2.2.${{ github.run_number }}\"}" > www/build.json
+
       - name: إنشاء مشروع الأندرويد
         run: |
           npx cap add android
           npx cap sync android
+
+      - name: الأيقونة والإصدار والأذونات
+        run: |
+          for d in mdpi hdpi xhdpi xxhdpi xxxhdpi; do
+            cp www/icon.png android/app/src/main/res/mipmap-$d/ic_launcher.png
+            cp www/icon.png android/app/src/main/res/mipmap-$d/ic_launcher_round.png
+          done
+          rm -rf android/app/src/main/res/mipmap-anydpi-v26
+          sed -i "s/versionCode 1$/versionCode ${{ github.run_number }}/; s/versionName \"1.0\"/versionName \"2.2.${{ github.run_number }}\"/" android/app/build.gradle
+          sed -i 's#<uses-permission android:name="android.permission.INTERNET" />#<uses-permission android:name="android.permission.INTERNET" />\n    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" android:maxSdkVersion="29" />#' android/app/src/main/AndroidManifest.xml
+          grep -n "version" android/app/build.gradle | head -5
+
+      - name: مفتاح توقيع ثابت حتى يُثبَّت كل إصدار فوق السابق
+        run: |
+          mkdir -p ~/.android
+          cp ci/debug.keystore ~/.android/debug.keystore
 
       - name: بناء ملف APK
         run: |
@@ -47,7 +66,10 @@ jobs:
       - name: نشر إصدار جديد
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.0.${{ github.run_number }}
-          name: المنة — الإصدار 1.0.${{ github.run_number }}
-          body: ملف التثبيت almenna.apk — يُنزَّل على الهاتف ويُفتح لتثبيته.
+          tag_name: v2.2.${{ github.run_number }}
+          name: المنة — الإصدار 2.2.${{ github.run_number }}
+          body: |
+            ملف التثبيت almenna.apk — يُنزَّل على الهاتف ويُفتح لتثبيته.
+            تطبيق واحد يجمع برنامج الويندوز 2.1.0 كاملًا مع بياناته، وميزات نسخة الأندرويد السابقة، ومئة ميزة جديدة تعمل مع TalkBack.
           files: almenna.apk
+          make_latest: true
