@@ -208,11 +208,17 @@
   }
 
   window.api = {
+    // على الهاتف يفك أندرويد ضغط ملفات .gz عند البناء ويحذف الامتداد، فنجرب الاسمين
     data: async (rel) => {
-      const r = await fetch('data/' + rel.replace(/^\/+/, ''));
-      if (!r.ok) return null;
-      const buf = await r.arrayBuffer();
-      return rel.endsWith('.gz') ? gunzipBytes(buf) : new TextDecoder().decode(buf);
+      rel = rel.replace(/^\/+/, '');
+      const names = rel.endsWith('.gz') ? [rel.slice(0, -3), rel] : [rel];
+      for (const n of names) {
+        let r;
+        try { r = await fetch('data/' + n); } catch { continue; }
+        if (!r.ok) continue;
+        return gunzipBytes(await r.arrayBuffer());
+      }
+      return null;
     },
     settings: async () => { try { return JSON.parse(localStorage.getItem(SKEY()) || '{}'); } catch { return {}; } },
     saveSettings: async (o) => { localStorage.setItem(SKEY(), JSON.stringify(o)); return true; },

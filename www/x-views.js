@@ -1,6 +1,6 @@
 'use strict';
 /* المنة للأندرويد — الأقسام الجديدة: الرئيسية، الفهرس، القراءة المتصلة، الحفظ، الورد والختمة، الملاحظات والعلامات، الأدوات، الميزات، المساعدة. */
-const QURAN_SHA = '0e70ca504bc5572e1ed9b647747d04eddc63b048fc7e34054cd1f242b63133e2';
+const QURAN_SHA = '74df41104272728a14da3ee4931a53a5ff89d836f47e1c443667c403b8acccca';
 const REVIEW_STEPS = [1, 3, 7, 14, 30, 60, 120];
 const DHIKR = ['سبحان الله', 'الحمد لله', 'الله أكبر', 'لا إله إلا الله', 'أستغفر الله', 'اللهم صل وسلم على نبينا محمد', 'سبحان الله وبحمده، سبحان الله العظيم', 'لا حول ولا قوة إلا بالله'];
 const RTITLE = (s, a, b) => `سورة ${surah(s).name}، ${a === b ? 'الآية ' + ar(a) : `من الآية ${ar(a)} إلى ${ar(b)}`}`;
@@ -573,7 +573,7 @@ async function viewClick(act, b) {
     }
     case 'open-url': window.api.openExternal(d.url); break;
     case 'integrity': {
-      const buf = await (await fetch('data/quran.json.gz')).arrayBuffer();
+      const buf = new TextEncoder().encode(await window.api.data('quran.json.gz'));
       const h = [...new Uint8Array(await crypto.subtle.digest('SHA-256', buf))].map((x) => x.toString(16).padStart(2, '0')).join('');
       const ok = h === QURAN_SHA; $('x-upd').innerHTML = `<p tabindex="-1">${ok ? 'نص القرآن في التطبيق سليم، مطابق للنسخة الأصلية تمامًا.' : 'تنبيه: نص القرآن في التطبيق لا يطابق النسخة الأصلية. أعد تثبيت التطبيق.'}</p>`;
       $('x-upd').querySelector('p').focus(); tone(ok ? 'ok' : 'err'); break;
