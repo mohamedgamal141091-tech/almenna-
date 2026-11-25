@@ -27,7 +27,8 @@ jobs:
         run: npm install
 
       - name: رقم الإصدار
-        run: echo "{\"build\": ${{ github.run_number }}, \"version\": \"2.2.${{ github.run_number }}\"}" > www/build.json
+        run: |
+          echo '{"build": ${{ github.run_number }}, "version": "2.2.${{ github.run_number }}"}' > www/build.json
 
       - name: إنشاء مشروع الأندرويد
         run: |
